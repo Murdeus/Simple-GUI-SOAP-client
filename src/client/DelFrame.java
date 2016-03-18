@@ -67,7 +67,15 @@ public class DelFrame extends JFrame {
                     personList.add(this.name.getText());
                     personList.add(this.surname.getText());
                     personList.add(this.fathername.getText());
-                    window.getHello().deleteContent(personList);
+                    if(window.getHello()!=null) {
+                        window.getHello().deleteContent(personList);
+                    } else {
+                        try {
+                            window.getClient().deleteContent(personList);
+                        } catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                    }
                     window.updateContent();
                     bool = true;
                     this.dispose();

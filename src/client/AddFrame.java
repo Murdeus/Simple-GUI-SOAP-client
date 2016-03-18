@@ -5,8 +5,6 @@ import server.SoapServer;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,14 +81,22 @@ public class AddFrame extends JFrame {
         List<String>listContent = new ArrayList<String>();
         if((!(this.name.getText().equals(""))) && (!(this.surname.getText().equals("")))
                 && (!(this.fathername.getText().equals(""))) && (!(this.birthdate.getText().equals("")))
-                && (!(this.form.getText().equals(""))) && (!(this.surname.getText().equals("")))){
+                && (!(this.form.getText().equals(""))) && (!(this.phone.getText().equals("")))){
             listContent.add(this.name.getText());
             listContent.add(this.surname.getText());
             listContent.add(this.fathername.getText());
             listContent.add(this.birthdate.getText());
             listContent.add(this.form.getText());
             listContent.add(this.phone.getText());
-            window.getHello().addContent(listContent);
+            if(window.getHello()!=null) {
+                window.getHello().addContent(listContent);
+            } else {
+                try {
+                    window.getClient().addContent(listContent);
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
             window.updateContent();
             this.dispose();
         } else {

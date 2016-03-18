@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import rpc.server.ThriftServer;
 
 
 /**
@@ -19,12 +20,18 @@ public class MainWindow extends JFrame {
     private ClientTableModel model;
     private List<String> list;
     private int columns;
+    private ThriftServer.Client client;
 
-    public MainWindow(SoapServer hello){
+    public MainWindow(SoapServer hello, ThriftServer.Client client){
         this.hello = hello;
+        this.client = client;
         this.setSize(900,500);
         this.setLocation(250,150);
-        this.setTitle("SOAP Client");
+        if(hello!=null) {
+            this.setTitle("GUI Client   Server type Documet-style SOAP");
+        } else {
+            this.setTitle("GUI Client   Server type RPC");
+        }
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         JToolBar toolBar = new JToolBar(1);
@@ -65,12 +72,29 @@ public class MainWindow extends JFrame {
     }
 
     public void setContent(){
-        list = hello.getContent();
-        columns = hello.getColumns();
+        if(hello!=null) {
+            list = hello.getContent();
+            columns = hello.getColumns();
+        } else {
+            try {
+                list = client.getContent();
+                columns = client.getColumns();
+            } catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
     }
 
     public void updateContent(){
-        list = hello.getContent();
+        if(hello!=null) {
+            list = hello.getContent();
+        } else {
+            try {
+                list = client.getContent();
+            } catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
         model.updateList(this.list);
         getContentPane();
         this.table.updateUI();
@@ -90,6 +114,10 @@ public class MainWindow extends JFrame {
 
     public SoapServer getHello(){
         return this.hello;
+    }
+
+    public ThriftServer.Client getClient(){
+        return this.client;
     }
 
     public List<String> getList(){

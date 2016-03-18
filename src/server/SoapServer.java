@@ -39,6 +39,33 @@ public interface SoapServer {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @RequestWrapper(localName = "changeContent", targetNamespace = "http://server/", className = "server.ChangeContent")
+    @ResponseWrapper(localName = "changeContentResponse", targetNamespace = "http://server/", className = "server.ChangeContentResponse")
+    @Action(input = "http://server/SoapServer/changeContentRequest", output = "http://server/SoapServer/changeContentResponse")
+    public void changeContent(
+        @WebParam(name = "arg0", targetNamespace = "")
+        List<String> arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        List<String> arg1);
+
+    /**
+     * 
+     * @param arg0
+     */
+    @WebMethod
+    @RequestWrapper(localName = "addContent", targetNamespace = "http://server/", className = "server.AddContent")
+    @ResponseWrapper(localName = "addContentResponse", targetNamespace = "http://server/", className = "server.AddContentResponse")
+    @Action(input = "http://server/SoapServer/addContentRequest", output = "http://server/SoapServer/addContentResponse")
+    public void addContent(
+        @WebParam(name = "arg0", targetNamespace = "")
+        List<String> arg0);
+
+    /**
+     * 
      * @return
      *     returns int
      */
@@ -60,32 +87,5 @@ public interface SoapServer {
     public void deleteContent(
         @WebParam(name = "arg0", targetNamespace = "")
         List<String> arg0);
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @RequestWrapper(localName = "addContent", targetNamespace = "http://server/", className = "server.AddContent")
-    @ResponseWrapper(localName = "addContentResponse", targetNamespace = "http://server/", className = "server.AddContentResponse")
-    @Action(input = "http://server/SoapServer/addContentRequest", output = "http://server/SoapServer/addContentResponse")
-    public void addContent(
-        @WebParam(name = "arg0", targetNamespace = "")
-        List<String> arg0);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod
-    @RequestWrapper(localName = "changeContent", targetNamespace = "http://server/", className = "server.ChangeContent")
-    @ResponseWrapper(localName = "changeContentResponse", targetNamespace = "http://server/", className = "server.ChangeContentResponse")
-    @Action(input = "http://server/SoapServer/changeContentRequest", output = "http://server/SoapServer/changeContentResponse")
-    public void changeContent(
-        @WebParam(name = "arg0", targetNamespace = "")
-        List<String> arg0,
-        @WebParam(name = "arg1", targetNamespace = "")
-        List<String> arg1);
 
 }

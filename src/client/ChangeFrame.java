@@ -92,7 +92,15 @@ public class ChangeFrame extends JFrame{
                     changeList.add(this.birthdate.getText());
                     changeList.add(this.form.getText());
                     changeList.add(this.phone.getText());
-                    window.getHello().changeContent(personList, changeList);
+                    if(window.getHello()!=null) {
+                        window.getHello().changeContent(personList, changeList);
+                    } else {
+                        try {
+                            window.getClient().changeContent(personList, changeList);
+                        } catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                    }
                     window.updateContent();
                     bool = true;
                     this.dispose();
